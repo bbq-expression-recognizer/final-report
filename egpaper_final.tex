@@ -44,9 +44,11 @@ Seoul National University\\
 %%%%%%%%% ABSTRACT
 \begin{abstract}
 
-Our goal is to write program which recongnizes handwritten mathematical expressions.
+Our goal is to write a program which recongnizes handwritten mathematical expressions.
 We made several milestones to solve this hard problem.
-We are going to using ANN algorithm basically to solve this problem.
+The problem can be solved in three stages, namely character segmentation, character recognition, and calculation.
+We will mainly focus on the latter two stages.
+We are going to use artificial neural network algorithm to solve this problem.
 
 \end{abstract}
 
@@ -109,14 +111,16 @@ The proposed problem might be solved in several stages:
 character segmentation, character recognition, and calculating final results.
 
 The first stage `character segmentation' is to detect characters and to output each character region.
-This is probably the most challenging part, therefore we will not address the segmentation issue here.
-We will just assume the segmentation is done already. 
+This is probably the most challenging part, therefore we will not address the segmentation issue
+unless we finish other parts.
+We will just assume the segmentation is done already.
 
 For the next stage `character recognition',
 we will apply convolutional neural network to recognize each symbol in an expression.
 We also have to consider context to get proper expression. For example, $\sin \pi$ is much more likely to appear in the expression than $51n \pi$. Markov chain might be used to determine the probabilities.
 
 Finally, we will calculate the expressions based on the results of the prior stages.
+
 
 %-------------------------------------------------------------------------
 \section{Evaluation}
@@ -129,14 +133,19 @@ and CROHME (Competition on Recognition of Online Handwritten Mathematical Expres
 
 \subsection{Test Data}
 
-In the above two datasets, they also provide us traning data and test data separately.
+Each of the above two data sets provides training data and test data separately.
 We can use test data from those sets.
 
 \subsection{Evaluation Procedure}
 
 At first, using MNIST database, we can evaluate our recognition ability digit by digit.
-Moreover, using CROHME dataset, we can also determine our recongnition ability of mathematicl expressions.
+Moreover, using CROHME dataset, we can also determine our recongnition ability of mathematical expressions.
 We can scale our ability using error rate, or calculating string distances.
+
+%-------------------------------------------------------------------------
+\section{Team and Role}
+
+There will be no specific roles assigned. We (Kim, ChanMin, HeeHoon Kim, and Sanghyeok Park) will do all parts together.
 
 %-------------------------------------------------------------------------
 \section{References}
