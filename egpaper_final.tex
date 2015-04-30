@@ -72,22 +72,22 @@ It is difficult to recognize arbitrary mathematical expressions at first, so we 
 
 \begin{enumerate}
 \item The expression contains only digits and some arithmetic operators. \\
-e.g.) $765+573-25252$
+e.g., $765+573-25252$
 
 \item The expression contains parentheses. \\
-e.g.) $(301-314)\times 147$
+e.g., $(301-314)\times 147$
 
 \item The expression contains numbers with a decimal point. \\
-e.g.) $147.46 + 147.47 - 4.30 \times 18$
+e.g., $147.46 + 147.47 - 4.30 \times 18$
 
 \item The expression contains pi and trigonometrical functions. \\
-e.g.) $\sin \pi + \cot (\pi / 4)$
+e.g., $\sin \pi + \cot (\pi / 4)$
 
 \item The expression contains fractions and some mathematical symbols. \\
-e.g.) $$ \frac{3}{5} = 0.6 $$
+e.g., $$ \frac{3}{5} = 0.6 $$
 
 \item The expression contains sigma(summation) symbols and integration symbols. \\
-e.g.) $$ \sum_{i=0}^{5} i \times 2 $$
+e.g., $$ \sum_{i=0}^{5} i \times 2 $$
 
 \end{enumerate}
 
@@ -128,8 +128,14 @@ Finally, we will calculate the expressions based on the results of the prior sta
 
 \subsection{Training Data}
 
-We will use training data of "MNIST database of handwritten digits"
-and CROHME (Competition on Recognition of Online Handwritten Mathematical Expressions) dataset. 
+\begin{enumerate}
+\item MNIST \cite{MNIST} \\
+The MNIST database of handwritten digits contains 60,000 training sets and 10,000 test sets.
+
+\item CROHME \cite{CROHME} \\
+CROHME is the competition on recognizing handwritten mathematical expressions. CROHME provides training and test data of 2011 - 2013 competition in InkML format.
+
+\end{enumerate}
 
 \subsection{Test Data}
 
