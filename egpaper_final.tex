@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{url}
 
 % Include other packages here, before hyperref.
 
@@ -27,7 +28,7 @@
 %%%%%%%%% TITLE
 \title{Mathematical Expression Recognizer}
 
-\author{Kim, ChanMin \qquad HeeHoon Kim \qquad Sanghyeok Park\\
+\author{ChanMin Kim \qquad HeeHoon Kim \qquad Sanghyeok Park\\
 Department of Computer Science and Engineering\\
 Seoul National University\\
 {\tt\small kcm1700@snu.ac.kr, csehydrogen@gmail.com, pps987@snu.ac.kr}
@@ -43,13 +44,7 @@ Seoul National University\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   The ABSTRACT is to be in fully-justified italicized text, at the top
-   of the left-hand column, below the author and affiliation
-   information. Use the word ``Abstract'' as the title, in 12-point
-   Times, boldface type, centered relative to the column, initially
-   capitalized. The abstract is to be in 10-point, single-spaced type.
-   Leave two blank lines after the Abstract, then begin the main text.
-   Look at previous CVPR abstracts to get a feel for style and length.
+	TODO:
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
@@ -57,8 +52,8 @@ Seoul National University\\
 
 We implemented a simple mathematical expression recognizer which takes pictures of
 math expressions and generates TeX form of expressions. Our program has some restrictions.
-It can only recognize expressions that has only digits, arithmetic operators($+, -, *, /, \div$), 
-parentheses, $\phi$, $\e$. Expressions also should be in one line, and not have
+It can only recognize expressions that has only digits, arithmetic operators($+, -, *, /, \div$),
+parentheses, $\pi$, $e$. Expressions also should be in one line, and not have
 superscripts or subscripts. Background should be bright, and the expression should be dark.
 
 We devided this problem into three parts, normalization, segmentation, and recognition.
@@ -78,6 +73,49 @@ into same symbol. We chose the threshold $50\%$.
 % TODO
 
 \section{Background}
+
+There are a number of prior studies in the field of recognition of mathematical expressions.
+
+Michael Nielsen\cite{MichaelNielsen} wrote an introduction on neural networks.
+The book describes the basics of neural network.
+
+MNIST\cite{MNIST} data sets are famous for handwritten digits.
+
+One of the most popular mathematical expression recognition competition is CROHME,
+which stands for
+`Competition on Recognition of Online Handwritten Mathematical Expressions'\cite{CROHME}.
+They provide rich train data set and test data set of handwritten mathematical expressions
+in InkML. InkML is a file format for representing trace of handwriting.
+
+
+There was a student project by Vitali Sepetnitsky and Yakir Dahan\cite{OCRMATH}, which recognizes book printed mathematical formulas.
+There was also a related course project by Alistair Dobke and Mark Mann\cite{OCRMATH2}. The project recognizes handwritten mathematical expressions just as our project.
+
+
+
+\section{Approach}
+
+\section{Experiments}
+
+\section{Conclusion}
+
+\section{References}
+
+\section{Appendices}
+
+\begin{table}[h]
+\centering
+\label{symbol-list}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+$($ & $)$ & $+$ & $-$ & $/$ & 0 & 1 \\ \hline
+2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+9 & $=$ & $[$ & $\div$ & $\pi$ & $\times$ & $\{$ \\ \hline
+$\}$ & $]$ & e & $\cdot$ & $.$ & & \\
+\hline
+\end{tabular}
+\caption{List of recognizable symbols}
+\end{table}
 
 
 
