@@ -76,7 +76,7 @@ into same symbol. We chose the threshold $50\%$.
 
 There are a number of prior studies in the field of recognition of mathematical expressions.
 
-Michael Nielsen\cite{MichaelNielsen} wrote an introduction on neural networks.
+Michael Nielsen\cite{MichaelNielsen} wrote an introductory book on neural networks.
 The book describes the basics of neural network.
 
 MNIST\cite{MNIST} data sets are famous for handwritten digits.
@@ -94,6 +94,43 @@ There was also a related course project by Alistair Dobke and Mark Mann\cite{OCR
 
 
 \section{Approach}
+
+% TODO:
+% 우리들의 문제 해결은 어떻게 했는지 쓰기. 여기를 심혈을 기울여 쓰는 게 맞을듯
+%
+% 생각하고 있는 구조.
+%
+% - 알고리즘 (중요)
+%  - neural net training
+%    - training/test 데이터 가공
+%    - 사용한 파라미터와 구조 설명(conv1,conv2,conv3,ReLU,inner product, dropout, output layer(softmax) 언급 다 필요. conv는 kernel size 및 개수 표현)
+%  - normalization
+%    - binarization: local threshold method 알고리즘 구체적으로 설명. 이미지 또는 pseudo code 필요
+%    - rotation: 수식으로 설명. ternary search는 언급하면 될듯
+%  - segmentation
+%    - flood fill
+%    - merging intervals 알고리즘 설명 및 PPT 이미지 활용
+%  - dynamic programming
+%    - 불가능한 수식 거르는 규칙
+%      - 괄호
+%      - opening parenthesis '(' 직후 binary 연산자(unary는 허용) 확률 0
+%      - closing parenthesis ')' 직후 binary 연산자(unary는 허용) 확률 0
+%      - 등 다양한 규칙 썼는데, 이걸 서술할 것.
+%    - softmax 결과를 이용한 확률 곱 최대화.
+%    - DP state 정의 및 의미
+%    - 기대되는 효과: 실제 digit 단위 실험 결과를 보면 confusion matrix에서 /,(,),1 등이 자주 헷갈리고 3,{가 헷갈리고, 9,}가 헷갈리는데 이러한 경우 어느 게 맞는지 효과적으로 추론.
+% - 프로그래밍 언어: python
+% - 사용한 내용: caffe(뉴럴넷), Pillow(이미지 처리용), numpy(각종 계산용), scipy(마찬가지), django(웹데모개발용)
+%
+%
+%
+%
+
+% TODO: 여기다가 Approach section의 구조 설명을 추가한다.
+
+\subsection{Algorithm}
+
+\subsubsection{Single Digit Recognition by Convolutional Neural Network}
 
 \section{Experiments}
 
