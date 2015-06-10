@@ -130,9 +130,49 @@ There was also a related course project by Alistair Dobke and Mark Mann\cite{OCR
 
 \subsection{Algorithm}
 
+Our algorithm consists of several steps. We first binarize the image and rotate the image.
+We have m
+
 \subsubsection{Single Digit Recognition by Convolutional Neural Network}
 
+\subsubsection{Binarization}
+
+\subsubsection{Rotation}
+
+\subsubsection{Flood Fill}
+
+\subsubsection{Region Merge}
+
+\subsubsection{Dynamic Programming}
+
+\subsection{Environments}
+
+We used Python 2.7 as our main programming language.
+We used caffe and its python library for neural network.
+We used Pillow for basic image manipulation and numpy \& scipy for faster calculation.
+We used Django web framework for the web demo.
+
 \section{Experiments}
+%
+% 여기다 적을 거
+%
+% 1. symbol recognition 결과
+% 방법:
+%   Dataset: CROHME 것을 사용한다. inkml 파일에서 우리가 대상으로 하는 symbol만 추린다. 굵기 별로 생성한다. 학습에 CROHME의 training set 사용. 평가에 CROHME의 test set 사용함.
+%   softmax로 나온 결과 layer에서 argmax가 실제랑 같은지 비교
+% 결과:
+%   Neural Network 학습 결과 filter visualize
+%   Neural Network 학습 결과 실제 샘플 convolution 결과 테이블.
+%   confusion matrix. 그리고 confusion matrix의 자주 틀리는 부분들 이유 간략히 서술.
+%   전체 정확도 및 신뢰 구간 구하기.
+%
+% 2. 실제 이미지 입력 (모두 web demo에서 참고하기) 이건 qualitative밖에 얘기 못할듯. 주목할만한 오류들 적기.
+%   방법: 수식을 제시하고 해당 수식을 몇 명에게 handwriting을 받아서 수행
+%
+%
+
+
+The web demo is available at \url{http://chanmin.kim/image-expr/}.
 
 \section{Conclusion}
 
