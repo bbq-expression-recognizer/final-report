@@ -316,7 +316,7 @@ Let $[c_l, c_r]$ be interval that is $[A_l.x, A_r.x] \cap [B_l.x, B_r.x]$ if it 
 Finally, let $d$ be $c_r - c_l$.
 Then, we merge $A$ and $B$ if and only if
 \begin{subequations}
-\label{eq:merge-condition}
+\label{eq:mergecondition}
 \begin{align}
     \frac{d}{A_r.x - A_l.x} &> 0.5 \ \text{or} \\
     \frac{d}{B_r.x - B_l.x} &> 0.5
@@ -338,10 +338,117 @@ See Figure \ref{fig:merging} to obtain that how this algorithm works and solves 
 
 \subsubsection{Dynamic Programming}
 
+We finally guess the symbols in this stage.
+It might be okay to just guess the segmented symbols independently,
+but we did more to get better result.
+
+Our neural network model output layer uses softmax function,
+so we can interpret the values as probabilies for each symbol.
+We have selected 23 symbols. See Table~\ref{tbl:symbollist} for full list of symbols.
+Let $P_i,j$ be the predicted probability of the $i$-th symbol being $j$-th class.
+
+We have put some restrictions on guessing.
+We know that parentheses of correct mathematical expressions are matched correctly.
+For example, $(1 + 4($ doesn't make sense.
+We also know that duplicate operators doesn't appear in expressions except for
+unary operators. For example, $3 \times \div 4$ doesn't make sense.
+There are more restrictions that can be used for guessing.
+
+Here are some of the rules that is used in our algorithm.
+\begin{itemize}
+\item Parentheses are correctly matched.
+\item There are no digits right after $\pi$ and $e$.
+\item There are no duplicated binary operators.
+\item There are no binary operator after opening parentheses.
+\item There are no operator before closing parentheses.
+\item $\cdots$
+\end{itemize}
+
+We made a dynamic programming algorithm to make use of the rules above.
+Let's define a function $d(i, open, kind)$ for DP.
+
+$d(i, open, kind) := $ Maximum probability of the guess
+when the first $i$ segmented parts are used, the parenthesis is opened $open$ times, and
+the last character was guessed as $kind$-th symbol.
+
+Then the formula \ref{eqn:dprec} for calculating function $d(i, open, kind)$ look like below.
+
+\begin{equation}
+\label{eqn:dprec}
+d(i, open, kind) =
+\begin{cases}
+1 \text{\quad if $(i,open,kind) = (0,0,\Box)$ } \\
+0 \text{\quad if $i$, $open$, or $kind$ is invalid} \\
+0 \text{\quad if restricted by some rules} \\
+P_{i,kind} \cdot d(i-1, open-1, ?) \\
+\text{\quad if $kind$ is $(, \{, [$ } \\
+P_{i,kind} \cdot d(i-1, open+1, ?) \\
+\text{\quad if $kind$ is $), \}, ]$ } \\
+P_{i,kind} \cdot d(i-1, open, ?) \\
+\end{cases}
+\end{equation}
+
+Note that the above recurrence formula is just for a brief description.
+There are some more cases to consider to implement.
+
+We also have to record what states were used to find out exactly what symbols were guessed.
+For example, one might want to define the following function.
+$b(i, open, kind) := $ Previous $d$ state that is used to make $d(i, open, kind)$
+as large as possible.
+
+Not every segmented part is a symbol. Some of the segmented parts could be a noise in the picture.
+So we have added the probability of whitespace symbol.
+We have defined the probability of whitespace symbol so that every black pixel decreases the chance exponentially.
+
+Dot symbols are not trained in our neural network model.
+We have picked two dot symbols, `.' and `$\cdot$',
+namely decimal point and multiplication dot.
+We first guessed the bottom line and the top line of the expression.
+The lines were picked so that 95\% of the black pixels are above/below the line.
+Let's say the height is the distance between the bottom line and the top line.
+If width and height of the segmented parts are smaller than $\frac{1}{6}$ of the height,
+we consider this part as a dot.
+Deciding whether the dot is a decimal point or a multiplication dot depends on the $y$ position of the segmented part.
+Internal divison of the height in 1:3 ratio worked fine.
+
+The time complexity of the Dynamic Programming step is $O(n^2 \sigma^2)$ where $n$ means the number of segmented part and
+$\sigma$ means the number of symbols used. Therefore this step is reasonably fast.
+
+
+\subsubsection{Combining the steps}
+
+
+Finally our algorithm looks like the following \textbf{Algorithm  \ref{combined}}
+\begin{algorithm}
+\caption{The whole algorithm}
+\label{combined}
+\begin{algorithmic}[1]
+\State \texttt{Image} $\gets$ \texttt{BINARIZE(Image)}
+\State $\theta_{best}$ = Find the best $\theta$ of $D$.
+\State \texttt{Image} $\gets$ \texttt{Rotate(Image, $\theta_{best}$)}
+\State \texttt{Sections} $\gets$ \texttt{FloodFill(Image)}
+\State Sort \texttt{Sections} by the start $x$ coordinate.
+\ForAll {\texttt{A} $\in$ \texttt{Sections}}
+    \State \texttt{B} $\gets$ the next element of \texttt{A}
+    \If {the equation \ref{eq:mergecondition} is satisfied}
+        \State Remove \texttt{A} and \texttt{B} from \texttt{Sections}
+        \State $[c_{l}, c_{r}]$ $\gets$ Merge \texttt{A} and \texttt{B}
+        \State Add $[c_{l}, c_{r}]$
+    \EndIf
+\EndFor
+\ForAll {\texttt{S} $\in$ \texttt{Sections}}
+    \State Calculate $P$ by convolutional neural network.
+\EndFor
+\State Calculate $d(i, open, kind)$ and $b(i, open, kind)$
+\State Backtrace the calculations to reveal the guess.
+\end{algorithmic}
+\end{algorithm}
+
+
 \subsection{Environments}
 
 We used Python 2.7 as our main programming language.
-We used caffe and its python library for neural network.
+We used caffe and its python binding for neural network.
 We used Pillow for basic image manipulation and numpy \& scipy for faster calculation.
 We used Django web framework for the web demo.
 
@@ -350,7 +457,7 @@ We used Django web framework for the web demo.
 % 여기다 적을 거
 %
 % 1. symbol recognition 결과
-% 방법:
+% 테스트 데이터 생성 방법:
 %   Dataset: CROHME 것을 사용한다. inkml 파일에서 우리가 대상으로 하는 symbol만 추린다. 굵기 별로 생성한다. 학습에 CROHME의 training set 사용. 평가에 CROHME의 test set 사용함.
 %   softmax로 나온 결과 layer에서 argmax가 실제랑 같은지 비교
 % 결과:
@@ -362,6 +469,7 @@ We used Django web framework for the web demo.
 % 2. 실제 이미지 입력 (모두 web demo에서 참고하기) 이건 qualitative밖에 얘기 못할듯. 주목할만한 오류들 적기.
 %   방법: 수식을 제시하고 해당 수식을 몇 명에게 handwriting을 받아서 수행
 %
+% 3. 전체 식이 우리 인식 가능한 symbol로만 이뤄진 경우 테스트?
 %
 
 
@@ -378,16 +486,16 @@ The web demo is available at \url{http://chanmin.kim/image-expr/}.
 
 \begin{table}[h]
 \centering
-\label{symbol-list}
 \begin{tabular}{|l|l|l|l|l|l|l|}
 \hline
 $($ & $)$ & $+$ & $-$ & $/$ & 0 & 1 \\ \hline
 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
 9 & $=$ & $[$ & $\div$ & $\pi$ & $\times$ & $\{$ \\ \hline
-$\}$ & $]$ & e & $\cdot$ & $.$ & & \\
+$\}$ & $]$ & e & $ $ & $ $ & & \\
 \hline
 \end{tabular}
-\caption{List of recognizable symbols}
+\caption{List of symbols recognized by the neural network}
+\label{tbl:symbollist}
 \end{table}
 
 
