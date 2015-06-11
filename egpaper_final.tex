@@ -264,9 +264,10 @@ See Figure~\ref{fig:thresholding} for example.
 
 We rotated the image by appropriate angle for better segmentation and recognition.
 We set the object function $D$:
-$$
+\begin{equation}
+\label{eq:rotation-objective}
 D(\theta) = \textrm{std}[x_i \sin{\theta} - y_i \cos{\theta}] \textrm{ for all black pixels } i
-$$
+\end{equation}
 This function means the standard deviation of $y$ coordinates of the rotated image.
 We want to minimize the object function $D$ with regarding to $\theta$.
 
@@ -314,10 +315,13 @@ Let $A_l$, $B_l$ be leftmost point of $A$ and $B$, also $A_r$, $B_r$ be rightmos
 Let $[c_l, c_r]$ be interval that is $[A_l.x, A_r.x] \cap [B_l.x, B_r.x]$ if it exists.
 Finally, let $d$ be $c_r - c_l$.
 Then, we merge $A$ and $B$ if and only if
-\begin{align*}
+\begin{subequations}
+\label{eq:merge-condition}
+\begin{align}
     \frac{d}{A_r.x - A_l.x} &> 0.5 \ \text{or} \\
     \frac{d}{B_r.x - B_l.x} &> 0.5
-\end{align*}
+\end{align}
+\end{subequations}
 
 If we sort components with decreasing order of leftmost point of each component,
 we can easily apply merging algorithm in linear time.
