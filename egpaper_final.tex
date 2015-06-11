@@ -239,7 +239,7 @@ We used 350 and 30 for $W_{large}$ and $W_{small}$ respectively.
    \subcaptionbox{global thresholding}{
         \includegraphics[width=0.47\linewidth]{img/global.png}
    }
-   \subcaptionbox{local thresholding}{
+   \subcaptionbox{local thresholding and rotation}{
        \includegraphics[width=0.47\linewidth]{img/local.png}
    }
 \end{center}
@@ -250,11 +250,31 @@ We used 350 and 30 for $W_{large}$ and $W_{small}$ respectively.
 Our binarization method uses only neighborhood information.
 We were forced to apply local thresholding method instead of global thresholding method.
 Some parts of the background were sometimes darker than the text.
-See Figure \ref{fig:thresholding} for example.
+See Figure~\ref{fig:thresholding} for example.
 
-
+\begin{figure}[h]
+\begin{center}
+   \includegraphics[width=0.97\linewidth]{img/noisybg.png}
+\end{center}
+\caption{Example image of noisy background}
+\label{fig:noisy}
+\end{figure}
 
 \subsubsection{Rotation}
+
+We rotated the image by appropriate angle for better segmentation and recognition.
+We set the object function $D$:
+$$
+D(\theta) = \textrm{std}[x_i \sin{\theta} - y_i \cos{\theta}] \textrm{ for all black pixels } i
+$$
+This function means the standard deviation of $y$ coordinates of the rotated image.
+We want to minimize the object function $D$ with regarding to $\theta$.
+
+Our algorithm finds the best angle by using ternary search on range $[-\frac{\pi}{6}, \frac{\pi}{6}]$.
+Since finding the best angle is straight-forward, we'll skip the details.
+See Figure~\ref{fig:thresholding} and Figure~\ref{fig:noisy} to see the effect of the rotation step.
+
+
 
 \subsubsection{Flood Fill}
 
