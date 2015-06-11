@@ -430,7 +430,7 @@ Finally our algorithm looks like the following \textbf{Algorithm  \ref{combined}
 \State Sort \texttt{Sections} by the start $x$ coordinate.
 \ForAll {\texttt{A} $\in$ \texttt{Sections}}
     \State \texttt{B} $\gets$ the next element of \texttt{A}
-    \If {the equation \ref{eq:mergecondition} is satisfied}
+    \If {formula (\ref{eq:mergecondition}) is satisfied}
         \State Remove \texttt{A} and \texttt{B} from \texttt{Sections}
         \State $[c_{l}, c_{r}]$ $\gets$ Merge \texttt{A} and \texttt{B}
         \State Add $[c_{l}, c_{r}]$
