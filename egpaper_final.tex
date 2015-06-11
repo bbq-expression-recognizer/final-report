@@ -62,15 +62,16 @@ fit in straight rectangle box. In binarization, we applied local thresholding me
 Then we use ternary search method to find best angle we have to rotate.
 
 In segmentation part, basically we splited binarized symbols into connected components
-usingi Flood-Fill. However, we had to merge components into same symbol. For example,
+using Flood-Fill. However, we had to merge components into same symbol. For example,
 $=$ symbol is one symbol but it has two components. Because our expressions is in only
 one line, we measured only X-coordinates and overlap ratio of components. If one of the
 two components overlap ratio is larger than the threshold, we merged those components
 into same symbol. We chose the threshold $50\%$.
 
+In recognition part, we determined which symbol each merged component actually is. The probability for each component to be a specific symbol was calculated from neural network. Our neural network model is modified LeNet\cite{LeNet}. The network was trained and tested with Caffe, using MNIST\cite{MNIST} and CROHME\cite{CROHME} data sets. In order to prevent nonsense predictions (consecutive operators, unmatched parentheses, etc.), we used dynamic programming approach.
 
-%Our nerual network model uses modified LeNet, implemented by Caffe. [Citation needed]
 % TODO
+% result & this research's contribution (accomplishment) to this field
 
 \section{Background}
 
