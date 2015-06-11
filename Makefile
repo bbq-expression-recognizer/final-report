@@ -1,3 +1,4 @@
+export TEXINPUTS:=.:./algorithms:./algorithmicx:${TEXINPUTS}
 
 all:
 	pdflatex egpaper_final

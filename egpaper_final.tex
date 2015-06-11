@@ -7,6 +7,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{url}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage[noend]{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage{subcaption}
 
 % Include other packages here, before hyperref.
 
@@ -111,6 +114,7 @@ There was also a related course project by Alistair Dobke and Mark Mann\cite{OCR
 %  - segmentation
 %    - flood fill
 %    - merging intervals 알고리즘 설명 및 PPT 이미지 활용
+%    - dot recognition: 최대 높이/ 최저 높이 추정하고 그것을 기준으로 점 여부 판별하고 위치에 따라 .과 \cdot 분리
 %  - dynamic programming
 %    - 불가능한 수식 거르는 규칙
 %      - 괄호
@@ -132,11 +136,50 @@ There was also a related course project by Alistair Dobke and Mark Mann\cite{OCR
 \subsection{Algorithm}
 
 Our algorithm consists of several steps. We first binarize the image and rotate the image.
-We have m
+Then we segment the image into characters.
+The final step is to apply dynamic programming to guess each symbols.
 
 \subsubsection{Single Digit Recognition by Convolutional Neural Network}
 
 \subsubsection{Binarization}
+
+The binarization algorithm consists of several steps as shown in the following pseudo code.
+
+\begin{algorithm}
+\caption{Binarization} \label{binarization}
+\begin{algorithmic}[1]
+\Function{binarize}{}
+\State \texttt{image} $\gets$ grayscale(\texttt{image})
+\State \texttt{ns} $\gets$ \textbf{max} (2, \texttt{width} / 350, \texttt{height} / 350)
+\State \texttt{nearsum} $\gets$ \texttt{image} $\ast$ (\texttt{ns} $\times$ \texttt{ns} mean filter) \\
+\Comment{$\ast$: convolution operator}
+\State \texttt{fs} $\gets$ \textbf{max} (10, \texttt{width} / 30, \texttt{height} / 30)
+\State \texttt{farsum} $\gets$ \texttt{image} $\ast$ (\texttt{fs} $\times$ \texttt{fs} mean filter)
+\State \texttt{threshold} $\gets \frac{1}{6}$ min (\texttt{nearsum} - \texttt{farsum})
+\State \Return \texttt{nearsum} $<$ \texttt{farsum} + \texttt{threshold}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+The algorithm(\textbf{Algorithm \ref{binarization}}) caculates nearby pixel average and wider area average for each pixel.
+Then the function calculates the differences and check the difference against the \texttt{threshold}.
+The result is \texttt{height} $\times$ \texttt{width} binarized image.
+
+\begin{figure}[t]
+\begin{center}
+   \subcaptionbox{global thresholding}{
+        \includegraphics[width=0.47\linewidth]{img/global.png}
+   }
+   \subcaptionbox{local thresholding}{
+       \includegraphics[width=0.47\linewidth]{img/local.png}
+   }
+\end{center}
+   \caption{It is nearly impossible to separate the text by usual thresholding methods. }
+\label{fig:thresholding}
+\end{figure}
+
+Thresholding is done using only neighborhood information. See the Figure \ref{fig:thresholding} for details.
+
 
 \subsubsection{Rotation}
 
