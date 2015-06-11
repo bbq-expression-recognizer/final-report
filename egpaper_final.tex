@@ -303,7 +303,8 @@ which have same X-coordinates. However, this simple method makes another problem
     \label{fig:little_overlapping}
 \end{figure}
 
-In Figure \ref{fig:little_overlapping}, '$($' and '$7$' component shares few X-coordinates; therefore, they will be merged.
+In Figure \ref{fig:little_overlapping}, '$($' and '$7$' component shares few X-coordinates;
+therefore, they will be merged.
 However, we expect that those components should not be merged.
 
 Therefore, we should restrict our merging method. Our idea is that merge two components
@@ -314,9 +315,22 @@ Let $[c_l, c_r]$ be interval that is $[A_l.x, A_r.x] \cap [B_l.x, B_r.x]$ if it 
 Finally, let $d$ be $c_r - c_l$.
 Then, we merge $A$ and $B$ if and only if
 \begin{align*}
-    \frac{d}{A_r.x - A_l.x} &\geq 0.5 \ or \\
-    \frac{d}{B_r.x - B_l.x} &\geq 0.5
+    \frac{d}{A_r.x - A_l.x} &> 0.5 \ \text{or} \\
+    \frac{d}{B_r.x - B_l.x} &> 0.5
 \end{align*}
+
+If we sort components with decreasing order of leftmost point of each component,
+we can easily apply merging algorithm in linear time.
+
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{img/merging.png}
+    \end{center}
+    \caption{Examples of merging algorithm}
+    \label{fig:merging}
+\end{figure}
+
+See Figure \ref{fig:merging} to obtain that how this algorithm works and solves problems.
 
 \subsubsection{Dynamic Programming}
 
