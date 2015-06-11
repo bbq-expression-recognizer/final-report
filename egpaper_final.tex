@@ -143,8 +143,6 @@ The final step is to apply dynamic programming to guess each symbols.
 
 \subsubsection{Binarization}
 
-The binarization algorithm consists of several steps as shown in the following pseudo code.
-
 \begin{algorithm}
 \caption{Binarization} \label{binarization}
 \begin{algorithmic}[1]
@@ -161,7 +159,8 @@ The binarization algorithm consists of several steps as shown in the following p
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm(\textbf{Algorithm \ref{binarization}}) caculates nearby pixel average and wider area average for each pixel.
+The binarization algorithm consists of several steps as shown in \textbf{Algorithm \ref{binarization}}.
+The algorithm caculates nearby pixel average and wider area average for each pixel.
 Then the function calculates the differences and check the difference against the \texttt{threshold}.
 The result is \texttt{height} $\times$ \texttt{width} binarized image.
 
@@ -178,7 +177,11 @@ The result is \texttt{height} $\times$ \texttt{width} binarized image.
 \label{fig:thresholding}
 \end{figure}
 
-Thresholding is done using only neighborhood information. See the Figure \ref{fig:thresholding} for details.
+Our binarization method uses only neighborhood information.
+We were forced to apply local thresholding method instead of global thresholding method.
+Some parts of the background were sometimes darker than the text.
+See Figure \ref{fig:thresholding} for example.
+
 
 
 \subsubsection{Rotation}
