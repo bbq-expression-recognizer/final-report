@@ -152,12 +152,12 @@ The final step is to apply dynamic programming to guess each symbols.
 \begin{algorithmic}[1]
 \Function{binarize}{}
 \State \texttt{image} $\gets$ grayscale(\texttt{image})
-\State \texttt{ns} $\gets$ \textbf{max} (2, \texttt{width} / 350, \texttt{height} / 350)
+\State \texttt{ns} $\gets$ \textbf{max} (\texttt{width} / $W_{large}$, \texttt{height} / $W_{large}$)
 \State \texttt{nearsum} $\gets$ \texttt{image} $\ast$ (\texttt{ns} $\times$ \texttt{ns} mean filter) \\
 \Comment{$\ast$: convolution operator}
-\State \texttt{fs} $\gets$ \textbf{max} (10, \texttt{width} / 30, \texttt{height} / 30)
+\State \texttt{fs} $\gets$ \textbf{max} (\texttt{width} / $W_{small}$, \texttt{height} / $W_{small}$)
 \State \texttt{farsum} $\gets$ \texttt{image} $\ast$ (\texttt{fs} $\times$ \texttt{fs} mean filter)
-\State \texttt{threshold} $\gets \frac{1}{6}$ min (\texttt{nearsum} - \texttt{farsum})
+\State \texttt{threshold} $\gets \frac{1}{6}$ \textbf{min} (\texttt{nearsum} - \texttt{farsum})
 \State \Return \texttt{nearsum} $<$ \texttt{farsum} + \texttt{threshold}
 \EndFunction
 \end{algorithmic}
@@ -167,6 +167,8 @@ The binarization algorithm consists of several steps as shown in \textbf{Algorit
 The algorithm caculates nearby pixel average and wider area average for each pixel.
 Then the function calculates the differences and check the difference against the \texttt{threshold}.
 The result is \texttt{height} $\times$ \texttt{width} binarized image.
+$W_{large}$ and $W_{small}$ are parameters to the algorithm.
+We used 350 and 30 for $W_{large}$ and $W_{small}$ respectively.
 
 \begin{figure}[t]
 \begin{center}
