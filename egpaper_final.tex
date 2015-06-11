@@ -96,6 +96,44 @@ There was also a related course project by Alistair Dobke and Mark Mann\cite{OCR
 
 \section{Approach}
 
+\subsection{Segmentation}
+Basically we assume that connected pixels are in same symbol. Therefore, using Flood-fill,
+we decomposed image into components which contain only connected points.
+However, it is not enough to determine symbols. There exist two problems.
+
+% TODO:  번호매겨서 강조하면 좋을 것 같아요
+First, some symbols have several disconnected components. For example, $\div$ % 나눗셈 기호?
+has at least three disconnected components.
+Second, noise problem; some connected components in ideal might be written
+by several disconnected components.
+
+To solve those problems, we should merge some components. One of the simple method of merging
+is assuming components are in same symbol if and only if there exist points of each components
+which have same X-coordinates. However, this simple method makes another problem.
+
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics[width=0.1\linewidth]{img/little_overlapping.png}
+    \end{center}
+    \caption{'$($' and '$7$' shares few X-coordinates}
+    \label{fig:little_overlapping}
+\end{figure}
+
+In Figure \ref{fig:little_overlapping}, '$($' and '$7$' component shares few X-coordinates; therefore, they will be merged.
+However, we expect that those components should not be merged.
+
+Therefore, we should restrict our merging method. Our idea is that merge two components
+if and only if one of the components has common X-coordinate interval more than $50\%$.
+In formal, let $A$ and $B$ be two components which we want to determine whether we should merge.
+Let $A_l$, $B_l$ be leftmost point of $A$ and $B$, also $A_r$, $B_r$ be rightmost point of $A$ and $B$, respectively.
+Let $[c_l, c_r]$ be interval that is $[A_l.x, A_r.x] \cap [B_l.x, B_r.x]$ if it exists.
+Finally, let $d$ be $c_r - c_l$.
+Then, we merge $A$ and $B$ if and only if
+\begin{align*}
+    \frac{d}{A_r.x - A_l.x} &\geq 0.5 \ or \\
+    \frac{d}{B_r.x - B_l.x} &\geq 0.5
+\end{align*}
+
 % TODO:
 % 우리들의 문제 해결은 어떻게 했는지 쓰기. 여기를 심혈을 기울여 쓰는 게 맞을듯
 %
