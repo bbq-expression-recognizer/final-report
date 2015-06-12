@@ -207,8 +207,6 @@ Our algorithm consists of several steps. We first binarize the image and rotate 
 Then we segment the image into characters.
 The final step is to apply dynamic programming to guess each symbols.
 
-\subsubsection{Single Digit Recognition by Convolutional Neural Network}
-
 \subsubsection{Binarization}
 
 \begin{algorithm}
@@ -336,16 +334,29 @@ we can easily apply merging algorithm in linear time.
 
 See Figure \ref{fig:merging} to obtain that how this algorithm works and solves problems.
 
+\subsubsection{Single Symbol Recognition}
+
+Now we know which symbol each black pixel belongs to.
+To use our trained neural network, we should transform each symbol into standard input image form, as mentioned in train data generation.
+For $i$-th symbol, we extracted minimal area that contains all black pixels of the $i$-th symbol.
+Then the area was resized into 20 by 20 image with anti-aliasing technique, and 4 pixel padding was added to each side.
+
+We processed the image with our neural network, and we get $P_i$, 24-dimension vector for the $i$-th symbol.
+The dimension is determined by the number of symbols that we selected.
+See Table~\ref{tbl:symbollist} for full list of symbols.
+
+The output layer of our neural network model uses softmax function.
+Therefore, we can interpret $j$-th value of the vector, $P_{i,j}$, as the predicted probability of the $i$-th symbol being $j$-th class.
+Taking $argmax$ on $j$ gives us the most probable class for the $i$-th symbol.
+
+However, probability itself is not enough for parsing whole expression, since we don't benefit from context analysis.
+Thus, our algorithm goes for another step, Dynamic Programming, with probabilities as some initial values.
+
 \subsubsection{Dynamic Programming}
 
 We finally guess the symbols in this stage.
 It might be okay to just guess the segmented symbols independently,
 but we did more to get better result.
-
-Our neural network model output layer uses softmax function,
-so we can interpret the values as probabilies for each symbol.
-We have selected 23 symbols. See Table~\ref{tbl:symbollist} for full list of symbols.
-Let $P_i,j$ be the predicted probability of the $i$-th symbol being $j$-th class.
 
 We have put some restrictions on guessing.
 We know that parentheses of correct mathematical expressions are matched correctly.
