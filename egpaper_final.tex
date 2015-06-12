@@ -203,9 +203,26 @@ First part of the model consists of 3 convolution steps, compared to 2 in LeNet.
 Each step has Convolution layer, ReLU layer, and Pooling layer.
 They output 30, 60, 90 channel images of decreasing size, respectively, which are also larger than LeNet.
 
-Convolution layer picks up overall features of images from previous layers.
+Convolution layer picks up overall features of images from previous layers. (See Figure \ref{fig:conv_tile})
 LeNet uses kernel of size 5, but we reduced them to 3.
 Since we try to categorize twice more symbols from the same size images, large kernel has danger of losing too much information. 
+
+\begin{figure}[t]
+\begin{center}
+   \subcaptionbox{First convolution layer (30 channel)}{
+        \includegraphics[width=0.75\linewidth]{img/conv1_tile.png}
+   }
+   \subcaptionbox{Second convolution layer (60 channel)}{
+        \includegraphics[width=0.75\linewidth]{img/conv2_tile.png}
+   }
+   \subcaptionbox{Third convolution layer (90 channel)}{
+        \includegraphics[width=0.75\linewidth]{img/conv3_tile.png}
+   }
+\end{center}
+\caption{Trained multichannel masks of each convolution layer.
+Latter step contains higher level features.}
+\label{fig:conv_tile}
+\end{figure}
 
 ReLU layers are added for better prediction.
 We used leaky ones, i.e., negative slopes are $0.01$.
@@ -560,7 +577,7 @@ The web demo is available at \url{http://chanmin.kim/image-expr/}.
 Any user can upload drawn or captured images of handwritten expressions.
 Then input image, normalized image, and parsed result will appear in a box form.
 Unwanted results can be removed.}
-\label{fig:thresholding}
+\label{fig:web_demo}
 \end{figure}
 
 \section{Conclusion}
