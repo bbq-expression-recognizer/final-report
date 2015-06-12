@@ -56,18 +56,22 @@ Seoul National University\\
     It can only recognize digits, some arithmetic operators, parenthesis, $\pi$, and $e$.
     Our CNN model is modified LeNet, and the network was trained and tested with Caffe, using MNIST and CROHME.
     MNIST is a data set of handwritten digits, which contains 60000 train and 10000 test images.
-    CROHME is a data set of handwritten digits and other symbols that we need. It has 38248 images. % success(?) ratio?
+    CROHME is a data set of handwritten digits and other symbols that we need. It has 38248 images.
+    With those data sets, our model shows about 98\% accuracy on test set.
     Our recognizer works with following steps; normalization, segmentation, and recognition.
     In normalization part, we used local thresholding method.
     In segmentation part, we applied Flood-Fill and our own merging algorithm.
     Finally, in recognition part, we obtain the probability for each symbols with our own network;
     however, we used dynamic programming approach to avoid nonsense expressions.
-    In order to determine which expression flow makes sence,
+    In order to determine which expression flow makes sense,
     we defined states contains probabilities with respect to a writen component, a parenthesis depth, and a kind of guessed symbol. % hmm...
-    We calculated all states in $O(n^2 \sigma^2)$ time using dynamic programming.
-    To take the maximum probability of states, we can avoid nonsence expressions, such as $1(+30$.
-
-    TODO: results..?
+    We calculated all states in $O(n^2 \sigma^2)$ time using dynamic programming, which is enough fast.
+    To take the maximum probability of states, we can avoid nonsense expressions, such as $1(+30$.
+    This approach was very important.
+    By our confusion matrix of our model, there exist miss rates over than 10\%.
+    However, if symbols that make confusion are similar but in different kind, we can handle with dynamic programming.
+    We used another information of expression: the context of expressions; therefore, we could get better results.
+    We made a web demo application using above approachs at \url{http://chanmin.kim/image-expr/}.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
