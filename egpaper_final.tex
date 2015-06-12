@@ -209,14 +209,24 @@ Since we try to categorize twice more symbols from the same size images, large k
 
 \begin{figure}[t]
 \begin{center}
+   \subcaptionbox{Input Image}{
+        \rule{0.3\linewidth}{0pt}
+        \fbox{
+        \includegraphics[height=0.10\linewidth]{img/convoriginal.png}
+        }
+        \rule{0.3\linewidth}{0pt}
+   }
    \subcaptionbox{First convolution layer (30 channel)}{
-        \includegraphics[width=0.75\linewidth]{img/conv1_tile.png}
+        \includegraphics[width=0.48\linewidth]{img/conv1_tile.png}
+        \includegraphics[width=0.48\linewidth]{img/conv1_img_tile.png}
    }
    \subcaptionbox{Second convolution layer (60 channel)}{
-        \includegraphics[width=0.75\linewidth]{img/conv2_tile.png}
+        \includegraphics[width=0.48\linewidth]{img/conv2_tile.png}
+        \includegraphics[width=0.48\linewidth]{img/conv2_img_tile.png}
    }
    \subcaptionbox{Third convolution layer (90 channel)}{
-        \includegraphics[width=0.75\linewidth]{img/conv3_tile.png}
+        \includegraphics[width=0.48\linewidth]{img/conv3_tile.png}
+        \includegraphics[width=0.48\linewidth]{img/conv3_img_tile.png}
    }
 \end{center}
 \caption{Trained multichannel masks of each convolution layer.
