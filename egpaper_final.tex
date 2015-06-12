@@ -52,7 +52,7 @@ Seoul National University\\
 %%%%%%%%% ABSTRACT
 \begin{abstract}
     We implemented simple mathematical expression recognizer using Convolutional Neural Network (CNN).
-    Our recognizer takes pictures of one line math expression, and generates TeX form of the expression.
+    Our recognizer takes pictures of one line math expression, and generates \TeX form of the expression.
     It can only recognize digits, some arithmetic operators, parenthesis, $\pi$, and $e$.
     Our CNN model is modified LeNet, and the network was trained and tested with Caffe, using MNIST and CROHME.
     MNIST is a data set of handwritten digits, which contains 60000 train and 10000 test images.
@@ -71,24 +71,24 @@ Seoul National University\\
     By our confusion matrix of our model, there exist miss rates over than 10\%.
     However, if symbols that make confusion are similar but in different kind, we can handle with dynamic programming.
     We used another information of expression: the context of expressions; therefore, we could get better results.
-    We made a web demo application using above approachs at \url{http://chanmin.kim/image-expr/}.
+    We made a web demo application using above approaches at \url{http://chanmin.kim/image-expr/}.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
 
 We implemented a simple mathematical expression recognizer which takes pictures of
-math expressions and generates TeX form of expressions. Our program has some restrictions.
+math expressions and generates \TeX form of expressions. Our program has some restrictions.
 It can only recognize expressions that has only digits, arithmetic operators($+, -, \times, /, \div$),
 parentheses, $\pi$, $e$. Expressions also should be in one line, and not have
 superscripts or subscripts. Background should be bright, and the expression should be dark.
 
-We devided this problem into three parts, normalization, segmentation, and recognition.
+We divided this problem into three parts, normalization, segmentation, and recognition.
 In normalization part, we binarized our gray scale natural image, and rotated it to
 fit in straight rectangle box. In binarization, we applied local thresholding method.
 Then we use ternary search method to find best angle we have to rotate.
 
-In segmentation part, basically we splited binarized symbols into connected components
+In segmentation part, basically we split binarized symbols into connected components
 using Flood-Fill. However, we had to merge components into same symbol. For example,
 $=$ symbol is one symbol but it has two components. Because our expressions is in only
 one line, we measured only X-coordinates and overlap ratio of components. If one of the
@@ -163,7 +163,7 @@ There was also a related course project by Alistair Dobke and Mark Mann\cite{OCR
 
 \subsection{Preprocess}
 
-Since we use neural network, preprocesses, like data generation, modelling, and training, are as important as our main algorithm.
+Since we use neural network, preprocesses, like data generation, modeling, and training, are as important as our main algorithm.
 We covered details in this section.
 
 \subsubsection{Training and Test Data Generation}
@@ -263,7 +263,7 @@ The final step is to apply dynamic programming to guess each symbols.
 \end{algorithm}
 
 The binarization algorithm consists of several steps as shown in \textbf{Algorithm \ref{binarization}}.
-The algorithm caculates nearby pixel average and wider area average for each pixel.
+The algorithm calculates nearby pixel average and wider area average for each pixel.
 Then the function calculates the differences and check the difference against the \texttt{threshold}.
 The result is \texttt{height} $\times$ \texttt{width} binarized image.
 $W_{large}$ and $W_{small}$ are parameters to the algorithm.
@@ -457,7 +457,7 @@ Let's say the height is the distance between the bottom line and the top line.
 If width and height of the segmented parts are smaller than $\frac{1}{6}$ of the height,
 we consider this part as a dot.
 Deciding whether the dot is a decimal point or a multiplication dot depends on the $y$ position of the segmented part.
-Internal divison of the height in 1:3 ratio worked fine.
+Internal division of the height in 1:3 ratio worked fine.
 
 The time complexity of the Dynamic Programming step is $O(n^2 \sigma^2)$ where $n$ means the number of segmented part and
 $\sigma$ means the number of symbols used. Therefore this step is reasonably fast.
@@ -496,7 +496,7 @@ Finally our algorithm looks like the following \textbf{Algorithm  \ref{combined}
 \subsection{Environments}
 
 We used Python 2.7 as our main programming language.
-We used caffe and its python binding for neural network.
+We used Caffe and its python binding for neural network.
 We used Pillow for basic image manipulation and numpy \& scipy for faster calculation.
 We used Django web framework for the web demo.
 
