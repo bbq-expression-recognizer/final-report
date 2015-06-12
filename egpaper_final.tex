@@ -64,9 +64,9 @@ Seoul National University\\
     Finally, in recognition part, we obtain the probability for each symbols with our own network;
     however, we used dynamic programming approach to avoid nonsense expressions.
     In order to determine which expression flow makes sense,
-    we defined states contains probabilities with respect to a writen component, a parenthesis depth, and a kind of guessed symbol. % hmm...
+    we defined states contains probabilities with respect to a written component, a parenthesis depth, and a kind of guessed symbol. % hmm...
     We calculated all states in $O(n^2 \sigma^2)$ time using dynamic programming, which is enough fast.
-    To take the maximum probability of states, we can avoid nonsense expressions, such as $1(+30$.
+    With taking the maximum probability of states, we can avoid nonsense expressions, such as $1(+30$.
     This approach was very important.
     By our confusion matrix of our model, there exist miss rates over than 10\%.
     However, if symbols that make confusion are similar but in different kind, we can handle with dynamic programming.
