@@ -566,6 +566,27 @@ Blue cells are noticeable error predictions.}
 
 \subsection{Full Expression Recognition}
 
+To derive quantitative evaluation, we picked 237 expressions from CROHME, which contain only symbols in Table \ref{tbl:symbollist}. Handwritten images of 4 different line widths are generated using the same method with train data. The result is described in Table \ref{tbl:exp_recog_result}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Line width & Total & Correct & Wrong & \% accuracy \\ \hline
+1          & 237   & 147     & 90    & 62.0\%      \\ \hline
+2          & 237   & 162     & 75    & 68.4\%      \\ \hline
+3          & 237   & 154     & 83    & 65.0\%      \\ \hline
+5          & 237   & 143     & 94    & 60.3\%      \\ \hline
+\end{tabular}
+\caption{Full expression recognition result}
+\label{tbl:exp_recog_result}
+\end{table}
+
+Most wrong results came from failure of assumption, that different symbol pixels don't meet.
+Many people write digits and symbols which overlap each other.
+Other wrong results mostly caused by reasons described in previous subsection.
+Regarding these noisy test data, our recognizer performs quite well.
+
 \subsection{Web Demo}
 
 The web demo is available at \url{http://chanmin.kim/image-expr/}.
