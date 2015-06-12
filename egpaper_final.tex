@@ -51,7 +51,23 @@ Seoul National University\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-	TODO:
+    We implemented simple mathematical expression recognizer using Convolutional Neural Network (CNN).
+    Our recognizer takes pictures of one line math expression, and generates TeX form of the expression.
+    It can only recognize digits, some arithmetic operators, parenthesis, $\pi$, and $e$.
+    Our CNN model is modified LeNet, and the network was trained and tested with Caffe, using MNIST and CROHME.
+    MNIST is a data set of handwritten digits, which contains 60000 train and 10000 test images.
+    CROHME is a data set of handwritten digits and other symbols that we need. It has 38248 images. % success(?) ratio?
+    Our recognizer works with following steps; normalization, segmentation, and recognition.
+    In normalization part, we used local thresholding method.
+    In segmentation part, we applied Flood-Fill and our own merging algorithm.
+    Finally, in recognition part, we obtain the probability for each symbols with our own network;
+    however, we used dynamic programming approach to avoid nonsense expressions.
+    In order to determine which expression flow makes sence,
+    we defined states contains probabilities with respect to a writen component, a parenthesis depth, and a kind of guessed symbol. % hmm...
+    We calculated all states in $O(n^2 \sigma^2)$ time using dynamic programming.
+    To take the maximum probability of states, we can avoid nonsence expressions, such as $1(+30$.
+
+    TODO: results..?
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
